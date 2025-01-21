@@ -1,0 +1,51 @@
+archive: 
+  path: [./configs/categories/categories.txt, ./configs/styles/styles.txt]
+  descriptor: [Risk Category, Attack Style]
+
+sample_prompts: ./data/do-not-answer.json
+
+target_llm:
+  type_: vllm
+
+  model_kwargs:
+    model: Qwen/Qwen2.5-7B-Instruct
+    trust_remote_code: True
+    max_model_len: 4096 
+    gpu_memory_utilization: 0.8
+
+  sampling_params:
+    temperature: 0.6
+    top_p: 0.9
+    max_tokens: 1024
+
+mutator_llm: 
+  type_: vllm
+  
+  model_kwargs:
+    model: Qwen/Qwen2.5-3B-Instruct
+    trust_remote_code: True
+    gpu_memory_utilization: 0.3
+    model: gpt-3.5-turbo
+    max_model_len: 2048
+
+  sampling_params:
+    temperature: 0.7
+    top_p: 0.9
+    max_tokens: 128
+
+judge_llm: None
+
+fitness_llm: 
+  type_: vllm
+
+  model_kwargs:
+    model: meta-llama/Llama-Guard-3-1B
+    trust_remote_code: True
+    gpu_memory_utilization: 0.15
+    max_model_len: 4096
+
+  sampling_params:
+    temperature: 0.7
+    top_p: 0.9
+    max_tokens: 16
+    logprobs: 1
