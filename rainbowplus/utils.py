@@ -61,19 +61,26 @@ def load_json(
     return data[field][:sample_count]
 
 
-def save_iteration_log(log_dir, iteration, adv_prompts, responses, scores, timestamp):
+def save_iteration_log(
+    log_dir, adv_prompts, responses, scores, iters, timestamp, iteration=-1
+):
     """
     Save log of current iteration's results.
 
     Args:
         log_dir: Directory for saving log files
-        iteration: Current iteration number
         adv_prompts: Archive of adversarial prompts
         responses: Archive of model responses
         scores: Archive of prompt scores
         timestamp: Timestamp for log filename
+        iteration: Current iteration number 
+            - -1: Global log
+            - otherwise: Iteration log
     """
-    log_path = log_dir / f"rainbowplus_log_{timestamp}_epoch_{iteration+1}.json"
+    if iteration == -1:
+        log_path = log_dir / f"rainbowplus_log_{timestamp}.json"
+    else:
+        log_path = log_dir / f"rainbowplus_log_{timestamp}_epoch_{iteration+1}.json"
 
     with open(log_path, "w") as f:
         json.dump(
@@ -85,6 +92,7 @@ def save_iteration_log(log_dir, iteration, adv_prompts, responses, scores, times
                     str(key): value for key, value in responses._archive.items()
                 },
                 "scores": {str(key): value for key, value in scores._archive.items()},
+                "iters": {str(key): value for key, value in iters._archive.items()},
             },
             f,
             indent=2,
@@ -107,7 +115,6 @@ def initialize_language_models(config: ConfigurationLoader):
     model_configs = [
         config.target_llm,
         config.mutator_llm,
-        config.judge_llm,
     ]
 
     # Create unique language model switchers

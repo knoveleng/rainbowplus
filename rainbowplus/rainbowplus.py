@@ -83,6 +83,9 @@ def parse_arguments():
         default="mistralai/Ministral-8B-Instruct-2410",
         help="Path to repository of target LLM",
     )
+    parser.add_argument(
+        "--shuffle", type=bool, default=True, help="Shuffle seed prompts"
+    )
     return parser.parse_args()
 
 
@@ -117,7 +120,7 @@ def run_rainbowplus(
             config.sample_prompts,
             field="question",
             num_samples=args.num_samples,
-            shuffle=True,
+            shuffle=args.shuffle,
         )
 
     # Load category descriptors
@@ -127,6 +130,7 @@ def run_rainbowplus(
     adv_prompts = Archive("adv_prompts")
     responses = Archive("responses")
     scores = Archive("scores")
+    iters = Archive("iterations")
 
     # Prepare log directory
     dataset_name = Path(config.sample_prompts).stem
@@ -213,19 +217,28 @@ def run_rainbowplus(
                     adv_prompts.add(key, filtered_prompts)
                     responses.add(key, filtered_candidates)
                     scores.add(key, filtered_scores)
+                    iters.add(key, [i] * len(filtered_prompts))
                 else:
                     adv_prompts.extend(key, filtered_prompts)
                     responses.extend(key, filtered_candidates)
                     scores.extend(key, filtered_scores)
+                    iters.extend(key, [i] * len(filtered_prompts))
+
+        # Global saving
+        save_iteration_log(
+            log_dir, adv_prompts, responses, scores, iters, "global", iteration=-1
+        )
 
         # Periodic logging
         if i > 0 and (i + 1) % args.log_interval == 0:
             timestamp = time.strftime(r"%Y%m%d-%H%M%S")
-            save_iteration_log(log_dir, i, adv_prompts, responses, scores, timestamp)
+            save_iteration_log(
+                log_dir, adv_prompts, responses, scores, iters, timestamp, iteration=i
+            )
 
     # Save final log
     timestamp = time.strftime(r"%Y%m%d-%H%M%S")
-    save_iteration_log(log_dir, i, adv_prompts, responses, scores, timestamp)
+    save_iteration_log(log_dir, adv_prompts, responses, scores, iters, timestamp, iteration=i)
 
     # Return final archives
     return adv_prompts, responses, scores
@@ -237,7 +250,6 @@ if __name__ == "__main__":
 
     # Load configuration and seed prompts
     config = ConfigurationLoader.load(args.config_file)
-    print(config)
 
     # Update configuration based on command-line arguments
     config.target_llm.model_kwargs["model"] = args.target_llm
@@ -247,6 +259,9 @@ if __name__ == "__main__":
     llms = initialize_language_models(config)
     fitness_fn = LlamaGuard(config.fitness_llm.model_kwargs)
     similarity_fn = BleuScoreNLTK()
+
+    # Show configuration
+    print(config)
 
     # Run the adversarial prompt generation process
     run_rainbowplus(
