@@ -1,36 +1,46 @@
-# RainbowPlus
+# 🌈 RainbowPlus
 
-## Overview
-This repository contains the implementation of the methods described in our research paper **"RainbowPlus: Enhancing Adversarial Prompt Generation via Evolutionary Quality-Diversity Search"**.
+## 📋 Overview
+This repository contains the implementation of the methods described in our research paper **"RainbowPlus: Enhancing Adversarial Prompt Generation via Evolutionary Quality-Diversity Search"**. Building upon the foundational insights of Rainbow Teaming and the MAP-Elites algorithm, *RainbowPlus* introduces key enhancements to the evolutionary quality-diversity (QD) paradigm. 
 
-## Key Features
+Specifically, *RainbowPlus* reimagines the archive as a dynamic, multi-individual container that stores diverse high-fitness prompts per cell, analogous to maintaining a population of elite solutions across behavioral niches. This enriched archive enables a broader evolutionary exploration of adversarial strategies. 
 
-- **State-of-the-Art Performance**: Achieves superior results compared to existing methods on HarmBench benchmark
-- **Universal Compatibility**: Supports both open-source and proprietary LLMs
-- **Computational Efficiency**: Completes an evaluation in just 1.45 hours
-- **Flexible Configuration**: Highly customizable for various experimental settings
+Furthermore, *RainbowPlus* employs a comprehensive fitness function that evaluates multiple candidate prompts in parallel using a probabilistic scoring mechanism, replacing traditional pairwise comparisons and enhancing both accuracy and computational efficiency. By integrating these evolutionary principles into its adaptive QD search, *RainbowPlus* achieves superior attack efficacy and prompt diversity, outperforming both QD-based methods and state-of-the-art red-teaming approaches.
 
-## Repository Structure
+![Diagram](/assets/diagram.png)
+
+## ✨ Key Features
+
+- 🏆 **State-of-the-Art Performance**: Achieves superior results compared to existing methods on HarmBench benchmark
+- 🔄 **Universal Compatibility**: Supports both open-source and closed-source LLMs (OpenAI, vLLM)
+- ⚡ **Computational Efficiency**: Completes an evaluation in just 1.45 hours on HarmBench
+- 🛠️ **Flexible Configuration**: Highly customizable for various experimental settings
+
+*RainbowPlus* achieves state-of-the-art results compared to other red-teaming methods.
+
+![Results](/assets/results-sota.png)
+
+## 📁 Repository Structure
 
 ```
 ├── configs/                  # Configuration files
 │   ├── categories/           # Category definitions
 │   ├── styles/               # Style definitions
 │   ├── base.yml              # Base configuration
-│   ├── base-openai.yml       # OpenAI-specific configuration
-│   ├── base-sota.yml         # SOTA model configuration
+│   ├── base-openai.yml       # Configuration to run LLMs from OpenAI
+│   ├── base-opensource.yml   # Configuration to run open-source LLMs
 │   └── eval.yml              # Evaluation configuration
 │
 ├── data/                     # Dataset storage
 │
 ├── rainbowplus/              # Core package
-│   ├── archive.py            # Archive management
 │   ├── configs/              # Configuration utilities
-│   ├── evaluate.py           # Current evaluation implementation
-│   ├── evaluate_v0.py        # Legacy evaluation implementation
-│   ├── get_scores.py         # Metrics extraction utilities
 │   ├── llms/                 # LLM integration modules
 │   ├── scores/               # Fitness and similarity functions
+│   ├── archive.py            # Archive management
+│   ├── evaluate.py           # Current evaluation implementation
+│   ├── evaluate_v0.py        # Evaluation implementation from old version
+│   ├── get_scores.py         # Metrics extraction utilities
 │   ├── prompts.py            # LLM prompt templates
 │   ├── rainbowplus.py        # Main implementation
 │   └── utils.py              # Utility functions
@@ -42,9 +52,9 @@ This repository contains the implementation of the methods described in our rese
 └── setup.py                  # Package installation script
 ```
 
-## Getting Started
+## 🚀 Getting Started
 
-### 1. Environment Setup
+### 1️⃣ Environment Setup
 
 Create and activate a Python virtual environment, then install the required dependencies:
 
@@ -54,9 +64,9 @@ source venv/bin/activate
 pip install -e .
 ```
 
-### 2. API Configuration
+### 2️⃣ API Configuration
 
-#### Hugging Face Token (Optional)
+#### 🤗 Hugging Face Token (Optional)
 
 Required for accessing certain resources from the Hugging Face Hub (e.g., Llama Guard):
 
@@ -70,7 +80,7 @@ Alternatively:
 huggingface-cli login --token=YOUR_HF_TOKEN
 ```
 
-#### OpenAI API Key (Optional)
+#### 🔑 OpenAI API Key (Optional)
 
 Required when using OpenAI models:
 
@@ -78,13 +88,13 @@ Required when using OpenAI models:
 export OPENAI_API_KEY="YOUR_API_KEY"
 ```
 
-## Usage
+## 📊 Usage
 
-### LLM Configuration
+### 🧠 LLM Configuration
 
 RainbowPlus supports two primary LLM integration methods:
 
-#### 1. vLLM (Open-Source Models)
+#### 1️⃣ vLLM (Open-Source Models)
 
 Example configuration for Qwen-2.5-7B-Instruct:
 
@@ -106,7 +116,7 @@ target_llm:
 
 Additional parameters can be specified according to the [vLLM model documentation](https://docs.vllm.ai/en/latest/api/offline_inference/llm.html) and [sampling parameters documentation](https://docs.vllm.ai/en/latest/api/inference_params.html#sampling-parameters).
 
-#### 2. OpenAI API (Proprietary Models)
+#### 2️⃣ OpenAI API (Closed-Source Models)
 
 Example configuration for GPT-4o-mini:
 
@@ -125,19 +135,29 @@ target_llm:
 
 Additional parameters can be specified according to the [OpenAI API documentation](https://platform.openai.com/docs/api-reference/chat/create).
 
-### Running Experiments
+### 🧪 Running Experiments
 
 Basic execution with default configuration:
 
 ```bash
-python -m rainbowplus.rainbowplus --config_file configs/base.yml
+python -m rainbowplus.rainbowplus \
+    --config_file configs/base.yml \
+    --num_samples 150 \
+    --max_iters 400 \
+    --sim_threshold 0.6 \
+    --num_mutations 10 \
+    --fitness_threshold 0.6 \
+    --log_dir logs-sota \
+    --dataset ./data/harmbench.json \
+    --log_interval 50 \
+    --shuffle True
 ```
 
-For customized experiments, you can override specific parameters:
+For customized experiments, you can override target LLM and specific parameters:
 
 ```bash
 python -m rainbowplus.rainbowplus \
-    --config_file configs/base-sota.yml \
+    --config_file configs/base-opensource.yml \
     --num_samples -1 \
     --max_iters 400 \
     --sim_threshold 0.6 \
@@ -145,12 +165,12 @@ python -m rainbowplus.rainbowplus \
     --fitness_threshold 0.6 \
     --log_dir logs-sota \
     --dataset ./data/harmbench.json \
-    --target_llm "model_identifier" \
+    --target_llm "TARGET MODEL" \
     --log_interval 50 \
     --shuffle True
 ```
 
-#### Configuration Parameters
+#### ⚙️ Configuration Parameters
 
 | Parameter | Description |
 |-----------|-------------|
@@ -165,7 +185,7 @@ python -m rainbowplus.rainbowplus \
 | `shuffle` | Whether to shuffle seed prompts |
 | `log_interval` | Number of iterations between log saves |
 
-### Batch Processing Multiple Models
+### 🔄 Batch Processing Multiple Models
 
 For evaluating multiple models sequentially:
 
@@ -174,7 +194,7 @@ MODEL_IDS="meta-llama/Llama-2-7b-chat-hf lmsys/vicuna-7b-v1.5 baichuan-inc/Baich
 
 for MODEL in $MODEL_IDS; do
     python -m rainbowplus.rainbowplus \
-        --config_file configs/base-sota.yml \
+        --config_file configs/base-opensource.yml \
         --num_samples -1 \
         --max_iters 400 \
         --sim_threshold 0.6 \
@@ -191,12 +211,12 @@ for MODEL in $MODEL_IDS; do
 done
 ```
 
-## Evaluation
+## 📊 Evaluation
 
 After running experiments, evaluate the results:
 
 ```bash
-MODEL_IDS="gpt-4.1-nano"  # For multiple models: MODEL_IDS="gpt-4.1-nano gpt-4o-mini"
+MODEL_IDS="meta-llama/Llama-2-7b-chat-hf"  # For multiple models: MODEL_IDS="meta-llama/Llama-2-7b-chat-hf lmsys/vicuna-7b-v1.5"
 
 for MODEL in $MODEL_IDS; do
     # Run evaluation
@@ -219,7 +239,7 @@ done
 | `log_dir` | Directory containing experiment logs |
 | `keyword` | Keyword for global config file name (default: `global`), you can ignore this param |
 
-### Output Metrics
+### 📉 Output Metrics
 
 Results are saved in JSON format:
 
@@ -231,10 +251,10 @@ Results are saved in JSON format:
 ```
 
 Where:
-- `General`: Metrics calculated using SOTA methods (on original prompts only)
+- `General`: Metrics calculated following standard methods
 - `All`: Metrics calculated across all generated prompts
 
-## Streamlined Execution
+## ⚡ Streamlined Execution
 
 For end-to-end execution, use the provided shell script:
 
@@ -242,18 +262,18 @@ For end-to-end execution, use the provided shell script:
 bash sh/run.sh
 ```
 
-## Next Features
+- Modify common parameters (`log_dir, max_iters, ...`) in line 4-11.
+- Modify target LLMs in line 56-77 for open-source models.
+- Modify target LLMs in line 80-83 for closed-source models.
+
+## 🔮 Next Features
 
 - [ ] Support OpenAI as fitness function
 - [ ] Deploy via FastAPI
 - [ ] Support more LLMs
 
-## Citation
+## 📝 Citation
 
 ```
 Coming soon...
 ```
-
-## License
-
-[License information will be added upon paper publication]
