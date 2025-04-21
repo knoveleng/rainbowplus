@@ -1,7 +1,7 @@
 # RainbowPlus
 
 ## Overview
-This repository contains the implementation of the methods described in our forthcoming research paper **"RainbowPlus: Enhancing Adversarial Prompt Generation via Evolutionary Quality-Diversity Search"**.
+This repository contains the implementation of the methods described in our research paper **"RainbowPlus: Enhancing Adversarial Prompt Generation via Evolutionary Quality-Diversity Search"**.
 
 ## Key Features
 
