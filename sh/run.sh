@@ -8,7 +8,7 @@ NUM_MUTATIONS=10
 FITNESS_THRESHOLD=0.6
 LOG_INTERVAL=50
 DATASET="./data/harmbench.json"
-LOG_DIR="./logs-sota-test"
+LOG_DIR="./logs-sota"
 
 # Run experiment for a specific model
 run_experiment() {
@@ -67,7 +67,7 @@ main() {
     )
     
     for MODEL in "${OPEN_SOURCE_MODELS[@]}"; do
-        run_experiment "$MODEL" "configs/base-sota.yml"
+        run_experiment "$MODEL" "configs/base-opensource.yml"
         clear_hf_cache
     done
     
@@ -83,7 +83,7 @@ main() {
     )
     
     for MODEL in "${CLOSED_SOURCE_MODELS[@]}"; do
-        run_experiment "" "configs/base-openai.yml"
+        run_experiment "$MODEL" "configs/base-openai.yml"
     done
     
     for MODEL in "${CLOSED_SOURCE_MODELS[@]}"; do
