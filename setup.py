@@ -14,7 +14,7 @@ with open(os.path.join(here, 'README.md'), encoding='utf-8') as f:
 # Define package metadata
 NAME = "rainbowplus"
 VERSION = "0.1.0"
-DESCRIPTION = "A framework for evaluating and improving the robustness of Large Language Models"
+DESCRIPTION = "RainbowPlus: Enhancing Adversarial Prompt Generation via Evolutionary Quality-Diversity Search"
 AUTHOR = "Knovel Engineering Lab"
 AUTHOR_EMAIL = "andrew.dang@knoveleng.com"
 URL = "https://github.com/knoveleng/rainbowplus"
