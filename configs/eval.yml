@@ -5,8 +5,8 @@
 log_dir: ./logs/mistralai/Ministral-8B-Instruct-2410/AdversarialQA
 
 # Algorithm
-algo: rainbowxplus
-method: all
+algo: rainbowplus
+method: all # Ignore this param, only valid for old version
 
 # Judge LLM
 judge_llm:
