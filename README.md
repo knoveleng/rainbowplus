@@ -1,11 +1,11 @@
 # 🌈 RainbowPlus
 
 ## 📋 Overview
-This repository contains the implementation of the methods described in our research paper **"RainbowPlus: Enhancing Adversarial Prompt Generation via Evolutionary Quality-Diversity Search"**. Building upon the foundational insights of Rainbow Teaming and the MAP-Elites algorithm, *RainbowPlus* introduces key enhancements to the evolutionary quality-diversity (QD) paradigm. 
+This repository contains the implementation of the methods described in our research paper **"[RainbowPlus: Enhancing Adversarial Prompt Generation via Evolutionary Quality-Diversity Search](https://arxiv.org/abs/2504.15047)"**. Building upon the foundational insights of Rainbow Teaming and the MAP-Elites algorithm, **RainbowPlus** introduces key enhancements to the evolutionary quality-diversity (QD) paradigm. 
 
-Specifically, *RainbowPlus* reimagines the archive as a dynamic, multi-individual container that stores diverse high-fitness prompts per cell, analogous to maintaining a population of elite solutions across behavioral niches. This enriched archive enables a broader evolutionary exploration of adversarial strategies. 
+Specifically, **RainbowPlus** reimagines the archive as a dynamic, multi-individual container that stores diverse high-fitness prompts per cell, analogous to maintaining a population of elite solutions across behavioral niches. This enriched archive enables a broader evolutionary exploration of adversarial strategies. 
 
-Furthermore, *RainbowPlus* employs a comprehensive fitness function that evaluates multiple candidate prompts in parallel using a probabilistic scoring mechanism, replacing traditional pairwise comparisons and enhancing both accuracy and computational efficiency. By integrating these evolutionary principles into its adaptive QD search, *RainbowPlus* achieves superior attack efficacy and prompt diversity, outperforming both QD-based methods and state-of-the-art red-teaming approaches.
+Furthermore, **RainbowPlus** employs a comprehensive fitness function that evaluates multiple candidate prompts in parallel using a probabilistic scoring mechanism, replacing traditional pairwise comparisons and enhancing both accuracy and computational efficiency. By integrating these evolutionary principles into its adaptive QD search, **RainbowPlus** achieves superior attack efficacy and prompt diversity, outperforming both QD-based methods and state-of-the-art red-teaming approaches.
 
 ![Diagram](/assets/diagram.png)
 
@@ -256,15 +256,15 @@ Where:
 
 ## ⚡ Streamlined Execution
 
-For end-to-end execution, use the provided shell script:
+For end-to-end execution, use the provided shell script [sh/run.sh](sh/run.sh):
 
 ```bash
 bash sh/run.sh
 ```
 
-- Modify common parameters (`log_dir, max_iters, ...`) in line 4-11.
-- Modify target LLMs in line 56-77 for open-source models.
-- Modify target LLMs in line 80-83 for closed-source models.
+- Modify common parameters (`log_dir, max_iters, ...`) in line [4-11](https://github.com/knoveleng/rainbowplus/blob/c4d679395d1dc5fd3d35da5e98f1568a06d3ee39/sh/run.sh#L4-L11).
+- Modify target LLMs in line [56-77](https://github.com/knoveleng/rainbowplus/blob/c4d679395d1dc5fd3d35da5e98f1568a06d3ee39/sh/run.sh#L56-L67) for open-source models.
+- Modify target LLMs in line [80-83](https://github.com/knoveleng/rainbowplus/blob/c4d679395d1dc5fd3d35da5e98f1568a06d3ee39/sh/run.sh#L80-L82) for closed-source models.
 
 ## 🔮 Next Features
 
@@ -275,5 +275,13 @@ bash sh/run.sh
 ## 📝 Citation
 
 ```
-Coming soon...
+@misc{dang2025rainbowplusenhancingadversarialprompt,
+      title={RainbowPlus: Enhancing Adversarial Prompt Generation via Evolutionary Quality-Diversity Search}, 
+      author={Quy-Anh Dang and Chris Ngo and Truong-Son Hy},
+      year={2025},
+      eprint={2504.15047},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL},
+      url={https://arxiv.org/abs/2504.15047}, 
+}
 ```
