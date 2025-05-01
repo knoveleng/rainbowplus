@@ -275,13 +275,5 @@ bash sh/run.sh
 ## 📝 Citation
 
 ```
-@misc{dang2025rainbowplusenhancingadversarialprompt,
-      title={RainbowPlus: Enhancing Adversarial Prompt Generation via Evolutionary Quality-Diversity Search}, 
-      author={Quy-Anh Dang and Chris Ngo and Truong-Son Hy},
-      year={2025},
-      eprint={2504.15047},
-      archivePrefix={arXiv},
-      primaryClass={cs.CL},
-      url={https://arxiv.org/abs/2504.15047}, 
-}
+Coming soon.
 ```
