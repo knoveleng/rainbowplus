@@ -1,7 +1,7 @@
 # 🌈 RainbowPlus
 
 ## 📋 Overview
-This repository contains the implementation of the methods described in our research paper **"[RainbowPlus: Enhancing Adversarial Prompt Generation via Evolutionary Quality-Diversity Search](https://arxiv.org/abs/2504.15047)"**. Building upon the foundational insights of Rainbow Teaming and the MAP-Elites algorithm, **RainbowPlus** introduces key enhancements to the evolutionary quality-diversity (QD) paradigm. 
+This repository contains the implementation of the methods described in our research paper **"RainbowPlus: Enhancing Adversarial Prompt Generation via Evolutionary Quality-Diversity Search"**. Building upon the foundational insights of Rainbow Teaming and the MAP-Elites algorithm, **RainbowPlus** introduces key enhancements to the evolutionary quality-diversity (QD) paradigm. 
 
 Specifically, **RainbowPlus** reimagines the archive as a dynamic, multi-individual container that stores diverse high-fitness prompts per cell, analogous to maintaining a population of elite solutions across behavioral niches. This enriched archive enables a broader evolutionary exploration of adversarial strategies. 
 
@@ -275,13 +275,5 @@ bash sh/run.sh
 ## 📝 Citation
 
 ```
-@misc{dang2025rainbowplusenhancingadversarialprompt,
-      title={RainbowPlus: Enhancing Adversarial Prompt Generation via Evolutionary Quality-Diversity Search}, 
-      author={Quy-Anh Dang and Chris Ngo and Truong-Son Hy},
-      year={2025},
-      eprint={2504.15047},
-      archivePrefix={arXiv},
-      primaryClass={cs.CL},
-      url={https://arxiv.org/abs/2504.15047}, 
-}
+Coming soon.
 ```
