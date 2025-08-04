@@ -15,9 +15,9 @@ with open(os.path.join(here, 'README.md'), encoding='utf-8') as f:
 NAME = "rainbowplus"
 VERSION = "0.1.0"
 DESCRIPTION = "RainbowPlus: Enhancing Adversarial Prompt Generation via Evolutionary Quality-Diversity Search"
-AUTHOR = "Knovel Engineering Lab"
-AUTHOR_EMAIL = "andrew.dang@knoveleng.com"
-URL = "https://github.com/knoveleng/rainbowplus"
+AUTHOR = "Anonymous"
+AUTHOR_EMAIL = "anonymous"
+URL = "https://github.com/anonymous/rainbowplus"
 LICENSE = "MIT" 
 
 # Define package dependencies
